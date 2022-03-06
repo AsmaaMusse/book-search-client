@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
   createHttpLink,
+  ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
@@ -39,11 +40,10 @@ function App() {
       <Router>
         <>
           <Navbar />
-          <Switch>
-            <Route exact path="/" component={SearchBooks} />
-            <Route exact path="/saved" component={SavedBooks} />
-            <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
-          </Switch>
+
+          <Route exact path="/" component={SearchBooks} />
+          <Route exact path="/saved" component={SavedBooks} />
+          <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
         </>
       </Router>
     </ApolloProvider>
