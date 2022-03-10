@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -14,7 +14,6 @@ import Navbar from "./components/Navbar";
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_API || "http://localhost:4000",
-  credentials: "same-origin",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -39,10 +38,11 @@ function App() {
       <Router>
         <>
           <Navbar />
-
-          <Route exact path="/" component={SearchBooks} />
-          <Route exact path="/saved" component={SavedBooks} />
-          <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
+          <Switch>
+            <Route exact path="/" component={SearchBooks} />
+            <Route exact path="/saved" component={SavedBooks} />
+            <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
+          </Switch>
         </>
       </Router>
     </ApolloProvider>
