@@ -1,10 +1,22 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
-import { createUser } from "../utils/API";
 import Auth from "../utils/auth";
 
 const SignupForm = () => {
+  const [executeAddUser] = useMutation(gql`
+    mutation Mutation($input: AddUserInput!) {
+      addUser(input: $input) {
+        token
+        user {
+          _id
+          username
+          email
+        }
+      }
+    }
+  `);
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
@@ -32,14 +44,17 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      const { data, error } = await executeAddUser({
+        variables: {
+          input: userFormData,
+        },
+      });
 
-      if (!response.ok) {
+      if (error) {
         throw new Error("something went wrong!");
       }
 
-      const { token, user } = await response.json();
-      console.log(user);
+      const { token } = data.addUser;
       Auth.login(token);
     } catch (err) {
       console.error(err);
