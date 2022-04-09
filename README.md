@@ -1,4 +1,4 @@
-# Book Search Server ![MIT](https://img.shields.io/static/v1?label=MIT&message=License&color=orange)
+# Book Search Client ![MIT](https://img.shields.io/static/v1?label=MIT&message=License&color=orange)
 
 ## Description:
 
